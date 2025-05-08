@@ -93,15 +93,12 @@ function insertNodeAtPosition(llist, data, position) {
         return newNode;
     }
 
-    for (let i = 0 ; i < position ; i++) {
-        if (current.next !== null) {
-                current = current.next;
-        } else {
-            console.log("Added " + data + " at position " + (i + 1) + " of the linked list.");
-            return llist;
-        }
+    for (let i = 0 ; i < position - 1 ; i++) {
+        current = current.next;
     }
 
+    newNode.next = current.next;
+    current.next = newNode;
     console.log("Added " + data + " at position " + position + " of the linked list.");
     return llist;
 
