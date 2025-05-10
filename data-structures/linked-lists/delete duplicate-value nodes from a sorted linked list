@@ -63,12 +63,10 @@ function printSinglyLinkedList(node, sep, ws) {
 }
 
 /*
- * Complete the 'getNode' function below.
+ * Complete the 'removeDuplicates' function below.
  *
- * The function is expected to return an INTEGER.
- * The function accepts following parameters:
- *  1. INTEGER_SINGLY_LINKED_LIST llist
- *  2. INTEGER positionFromTail
+ * The function is expected to return an INTEGER_SINGLY_LINKED_LIST.
+ * The function accepts INTEGER_SINGLY_LINKED_LIST llist as parameter.
  */
 
 /*
@@ -81,28 +79,26 @@ function printSinglyLinkedList(node, sep, ws) {
  *
  */
 
-function getNode(llist, positionFromTail) {
-    let slow = llist;
-    let fast = llist;
-    
-    for (let i = 0 ; i < positionFromTail ; i++) {
-        fast = fast.next;
+function removeDuplicates(llist) {
+    let current = llist;
+
+    while (current !== null && current.next !== null) {
+        if (current.data === current.next.data) {
+            current.next = current.next.next;
+        } else {
+            current = current.next;
+        }
     }
-    
-    while (fast.next !== null) {
-        slow = slow.next;
-        fast = fast.next;
-    }
-    
-    return slow.data;
+
+    return llist;
 }
 
 function main() {
     const ws = fs.createWriteStream(process.env.OUTPUT_PATH);
 
-    const tests = parseInt(readLine(), 10);
+    const t = parseInt(readLine(), 10);
 
-    for (let testsItr = 0; testsItr < tests; testsItr++) {
+    for (let tItr = 0; tItr < t; tItr++) {
         const llistCount = parseInt(readLine(), 10);
 
         let llist = new SinglyLinkedList();
@@ -112,11 +108,10 @@ function main() {
             llist.insertNode(llistItem);
         }
 
-        const position = parseInt(readLine(), 10);
+        let llist1 = removeDuplicates(llist.head);
 
-        let result = getNode(llist.head, position);
-
-        ws.write(result + "\n");
+        printSinglyLinkedList(llist1, " ", ws)
+        ws.write("\n");
     }
 
     ws.end();
